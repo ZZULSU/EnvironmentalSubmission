@@ -85,10 +85,10 @@ df2.to_csv('../first_threshold_8000_data/yield_piecewise_Y_8000_with_cluster.csv
 data = pd.read_csv('../first_threshold_8000_data/yield_piecewise_Y_8000_with_cluster.csv')
 data = data.dropna()
 
-yield_1960 = data.iloc[:, 0]
+yield_1980 = data.iloc[:, 0]
 yield_2000 = data.iloc[:, 1]
 
-increase_rate = (yield_2000 / yield_1960) - 1
+increase_rate = (yield_2000 / yield_1980) - 1
 data['difference'] = increase_rate
 
 data.drop(data.columns[[0, 1]], axis=1, inplace=True)

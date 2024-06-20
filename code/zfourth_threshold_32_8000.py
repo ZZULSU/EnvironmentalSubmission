@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import pandas as pd
@@ -6,7 +7,9 @@ import seaborn as sns
 from scipy import stats
 
 # Load your data into a pandas DataFrame
-data = pd.read_csv('../first_threshold_6000_data/yield_piecewise_X_6000.csv')
+data = pd.read_csv('../zfourth_threshold_32_8000_data/yield_piecewise_X_8000_threshold32.csv')
+data = data.dropna()
+data.to_csv('../zfourth_threshold_32_8000_data/yield_piecewise_X_8000_threshold32', index=False)
 
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(data)
@@ -43,11 +46,11 @@ clusters = kmeans.fit_predict(scaled_data)
 data['Cluster'] = clusters
 
 # Save the DataFrame with cluster assignments to a new CSV file (optional)
-data.to_csv('../first_threshold_6000_data/clustered_data_X.csv', index=False)
+data.to_csv('../zfourth_threshold_32_8000_data/clustered_data_X.csv', index=False)
 
 
 # Load your dataset into a Pandas DataFrame
-df = pd.read_csv('../first_threshold_6000_data/clustered_data_X.csv')
+df = pd.read_csv('../zfourth_threshold_32_8000_data/clustered_data_X.csv')
 
 # Separate the DataFrame based on the cluster column
 cluster_0 = df[df['Cluster'] == 0]
@@ -67,32 +70,32 @@ for var in variables:
     plt.show()
 
 # Load the first dataset
-df1 = pd.read_csv('../first_threshold_6000_data/clustered_data_X.csv')
-# Load the second dataset
-df2 = pd.read_csv('../first_threshold_6000_data/yield_piecewise_Y_6000.csv')
+df1 = pd.read_csv('../zfourth_threshold_32_8000_data/clustered_data_X.csv')
+# Load the zfourth dataset
+df2 = pd.read_csv('../zfourth_threshold_32_8000_data/yield_piecewise_Y_8000.csv')
 
 # Copy the specific column from the first dataset
 # Replace 'column_name' with the actual column name you want to copy
 column_to_copy = df1['Cluster']
 
-# Add this column to the second dataset as the end column
+# Add this column to the zfourth dataset as the end column
 df2['Cluster'] = column_to_copy
 
-# Save the modified second dataset to a new CSV file
-df2.to_csv('../first_threshold_6000_data/yield_piecewise_Y_6000_with_cluster.csv', index=False)
+# Save the modified zfourth dataset to a new CSV file
+df2.to_csv('../zfourth_threshold_32_8000_data/yield_piecewise_Y_8000_with_cluster.csv', index=False)
 
-data = pd.read_csv('../first_threshold_6000_data/yield_piecewise_Y_6000_with_cluster.csv')
+data = pd.read_csv('../zfourth_threshold_32_8000_data/yield_piecewise_Y_8000_with_cluster.csv')
 data = data.dropna()
 
-yield_1960 = data.iloc[:, 0]
+yield_1980 = data.iloc[:, 0]
 yield_2000 = data.iloc[:, 1]
 
-increase_rate = (yield_2000 / yield_1960) - 1
+increase_rate = (yield_2000 / yield_1980) - 1
 data['difference'] = increase_rate
 
 data.drop(data.columns[[0, 1]], axis=1, inplace=True)
 
-data.to_csv('../first_threshold_6000_data/increase_rate_with_cluster_6000.csv', index=False)
+data.to_csv('../zfourth_threshold_32_8000_data/increase_rate_with_cluster_8000.csv', index=False)
 
 cluster_0 = data[data['Cluster'] == 0]
 cluster_1 = data[data['Cluster'] == 1]
@@ -103,7 +106,7 @@ mean_df0 = cluster_0['difference'].mean()
 mean_df1 = cluster_1['difference'].mean()
 
 print(f"Mean of 'difference' in first DataFrame: {mean_df0}")
-print(f"Mean of 'difference' in second DataFrame: {mean_df1}")
+print(f"Mean of 'difference' in zfourth DataFrame: {mean_df1}")
 
 # Perform an independent samples t-test
 t_statistic, p_value = stats.ttest_ind(cluster_0['difference'], cluster_1['difference'])
