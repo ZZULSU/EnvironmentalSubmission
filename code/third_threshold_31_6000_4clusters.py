@@ -99,19 +99,19 @@ data.drop(data.columns[[0, 1]], axis=1, inplace=True)
 
 data.to_csv('../third_threshold_31_6000_data/increase_rate_with_cluster_6000.csv', index=False)
 
-cluster_1 = data[data['Cluster'] == 1]
-cluster_2 = data[data['Cluster'] == 2]
+cluster_0 = data[data['Cluster'] == 0]
+cluster_3 = data[data['Cluster'] == 3]
 
 
 # Calculate means of the 'difference' columns
-mean_df1 = cluster_1['difference'].mean()
-mean_df2 = cluster_2['difference'].mean()
+mean_df0 = cluster_0['difference'].mean()
+mean_df3 = cluster_3['difference'].mean()
 
-print(f"Mean of 'difference' in first DataFrame: {mean_df1}")
-print(f"Mean of 'difference' in third DataFrame: {mean_df2}")
+print(f"Mean of 'difference' in first DataFrame: {mean_df0}")
+print(f"Mean of 'difference' in third DataFrame: {mean_df3}")
 
 # Perform an independent samples t-test
-t_statistic, p_value = stats.ttest_ind(cluster_0['difference'], cluster_1['difference'])
+t_statistic, p_value = stats.ttest_ind(cluster_0['difference'], cluster_3['difference'])
 
 print(f"t-statistic: {t_statistic}")
 print(f"p-value: {p_value}")
