@@ -106,7 +106,7 @@ mean_df0 = cluster_0['difference'].mean()
 mean_df1 = cluster_1['difference'].mean()
 
 print(f"Mean of 'difference' in first DataFrame: {mean_df0}")
-print(f"Mean of 'difference' in zfourth DataFrame: {mean_df1}")
+print(f"Mean of 'difference' in second DataFrame: {mean_df1}")
 
 # Perform an independent samples t-test
 t_statistic, p_value = stats.ttest_ind(cluster_0['difference'], cluster_1['difference'])

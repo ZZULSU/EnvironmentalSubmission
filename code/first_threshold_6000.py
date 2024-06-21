@@ -5,12 +5,13 @@ from sklearn.preprocessing import StandardScaler
 import seaborn as sns
 from scipy import stats
 
-# Load your data into a pandas DataFrame
+# Load data into a pandas DataFrame
 data = pd.read_csv('../first_threshold_6000_data/yield_piecewise_X_6000.csv')
-
+# Scaling the data
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(data)
 
+# Elbow Method Graph
 wcss = []
 for i in range(1, 11):
     kmeans = KMeans(n_clusters=i, init='k-means++', max_iter=300, n_init=10, random_state=0)
@@ -23,7 +24,7 @@ plt.xlabel('Number of clusters')
 plt.ylabel('WCSS')  # Within cluster sum of squares
 plt.show()
 
-
+# Selecting the 'K' and plot the clusters
 k = 2 # Example: You determine 3 clusters from the elbow method
 kmeans = KMeans(n_clusters=k, init='k-means++', max_iter=300, n_init=10, random_state=0)
 clusters = kmeans.fit_predict(scaled_data)
@@ -46,14 +47,13 @@ data['Cluster'] = clusters
 data.to_csv('../first_threshold_6000_data/clustered_data_X.csv', index=False)
 
 
-# Load your dataset into a Pandas DataFrame
 df = pd.read_csv('../first_threshold_6000_data/clustered_data_X.csv')
 
 # Separate the DataFrame based on the cluster column
 cluster_0 = df[df['Cluster'] == 0]
 cluster_1 = df[df['Cluster'] == 1]
 
-# List of all variables (assuming they are numeric columns)
+
 variables = df.columns.difference(['Cluster'])  # Exclude the 'cluster' column
 
 # Plot box plots for each variable
@@ -71,14 +71,12 @@ df1 = pd.read_csv('../first_threshold_6000_data/clustered_data_X.csv')
 # Load the second dataset
 df2 = pd.read_csv('../first_threshold_6000_data/yield_piecewise_Y_6000.csv')
 
-# Copy the specific column from the first dataset
-# Replace 'column_name' with the actual column name you want to copy
+
 column_to_copy = df1['Cluster']
 
-# Add this column to the second dataset as the end column
+# Add this column to the corn yield dataset as the end column
 df2['Cluster'] = column_to_copy
 
-# Save the modified second dataset to a new CSV file
 df2.to_csv('../first_threshold_6000_data/yield_piecewise_Y_6000_with_cluster.csv', index=False)
 
 data = pd.read_csv('../first_threshold_6000_data/yield_piecewise_Y_6000_with_cluster.csv')

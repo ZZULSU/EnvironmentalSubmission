@@ -27,7 +27,7 @@ plt.ylabel('WCSS')  # Within cluster sum of squares
 plt.show()
 
 
-k = 2 # Example: You determine 3 clusters from the elbow method
+k = 4 # Example: You determine 3 clusters from the elbow method
 kmeans = KMeans(n_clusters=k, init='k-means++', max_iter=300, n_init=10, random_state=0)
 clusters = kmeans.fit_predict(scaled_data)
 
@@ -55,6 +55,8 @@ df = pd.read_csv('../third_threshold_31_6000_data/clustered_data_X.csv')
 # Separate the DataFrame based on the cluster column
 cluster_0 = df[df['Cluster'] == 0]
 cluster_1 = df[df['Cluster'] == 1]
+cluster_2 = df[df['Cluster'] == 2]
+cluster_3 = df[df['Cluster'] == 3]
 
 # List of all variables (assuming they are numeric columns)
 variables = df.columns.difference(['Cluster'])  # Exclude the 'cluster' column
@@ -97,16 +99,16 @@ data.drop(data.columns[[0, 1]], axis=1, inplace=True)
 
 data.to_csv('../third_threshold_31_6000_data/increase_rate_with_cluster_6000.csv', index=False)
 
-cluster_0 = data[data['Cluster'] == 0]
 cluster_1 = data[data['Cluster'] == 1]
+cluster_2 = data[data['Cluster'] == 2]
 
 
 # Calculate means of the 'difference' columns
-mean_df0 = cluster_0['difference'].mean()
 mean_df1 = cluster_1['difference'].mean()
+mean_df2 = cluster_2['difference'].mean()
 
-print(f"Mean of 'difference' in first DataFrame: {mean_df0}")
-print(f"Mean of 'difference' in third DataFrame: {mean_df1}")
+print(f"Mean of 'difference' in first DataFrame: {mean_df1}")
+print(f"Mean of 'difference' in third DataFrame: {mean_df2}")
 
 # Perform an independent samples t-test
 t_statistic, p_value = stats.ttest_ind(cluster_0['difference'], cluster_1['difference'])

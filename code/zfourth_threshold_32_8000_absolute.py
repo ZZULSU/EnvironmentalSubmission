@@ -90,7 +90,7 @@ data = data.dropna()
 yield_1980 = data.iloc[:, 0]
 yield_2000 = data.iloc[:, 1]
 
-increase_rate = (yield_2000 / yield_1980) - 1
+increase_rate = yield_2000 - yield_1980
 data['difference'] = increase_rate
 
 data.drop(data.columns[[0, 1]], axis=1, inplace=True)
